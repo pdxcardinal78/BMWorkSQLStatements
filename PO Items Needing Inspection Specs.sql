@@ -1,4 +1,5 @@
-Select * 
+Select * From(Select *
+	,rank() over (Partition by PurchaseOrder, Line Order By RowNumber) as rank2 
 	FROM (Select * 
 	,rank() over (partition by PurchaseOrder, Line order by MOrigDueDate, PurchaseOrder, Line, FirstArticleAvail DESC) as ranknum
 		FROM (Select TOP 100 Percent
@@ -27,6 +28,6 @@ Select *
 		Where InspectionFlag = 'Y' 
 			and OrderEntryDate between Dateadd(dd, -30, getdate()) and getdate()
 			and t3.InspectionSpecification_No is NULL
-			and (MCompleteFlag = ' ' or MCompleteFlag = 'N'))t5 )t6
-Where ranknum = 1
+			and (MCompleteFlag = ' ' or MCompleteFlag = 'N'))t5 )t6 )t7
+Where rank2 = 1
 Order By TimeTillDue
