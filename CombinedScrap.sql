@@ -1,8 +1,8 @@
 Declare @Start as Date
 Declare @End as Date
 
-Set @Start = '3/31/19'
-Set @End = '5/01/19'
+Set @Start = '6/17/19'
+Set @End = '6/17/19'
 
 Select 'WIP' as TransType, StockCode, StockDescription as Description, DateEntry as EntryDate, Job, WorkCentre as WorkCenter, Operator, '' as Reference, '' as AddReference, NonProdScrap as ScrapCode, ScrapDescription, QtyScrapped, TotalScrapCost as ScrapCost
 FROM(Select t1.Job, t4.StockCode, t4.StockDescription,t1.Operation, Operator, t3.WorkCentre, Machine, DateEntry, t1.QtyScrapped, t1.Journal, t1.NonProdScrap, t2.Description as ScrapDescription,
@@ -31,7 +31,7 @@ Join CompanyH.dbo.WipMaster t4
 on t4.Job = t1.Job
 Join (Select DISTINCT Job, SUM(UnitCost * UnitQtyReqd) over (Partition By Job Order By Job) as UnitMaterialCost FROM CompanyH.dbo.WipJobAllMat) as t9
 on t1.Job = t9.Job
-Where LEFT(t1.Job,2) <> 'AS' and LEFT(t1.Job, 3) <> 'RMA' and DateEntry between '3/31/19' and '5/1/19') WIP
+Where LEFT(t1.Job,2) <> 'AS' and LEFT(t1.Job, 3) <> 'RMA' and DateEntry between @Start and @End) WIP
 
 UNION ALL
 
@@ -61,4 +61,4 @@ on a.StockCode = b.StockCode and a.TrnYear = b.JnlYear and a.TrnMonth = b.JnlMon
 join CompanyH.dbo.InvJournalCtl c on a.TrnYear = c.YearPost and a.TrnMonth = c.MonthPost and a.Journal = c.Journal
 join CompanyH.dbo.WipScrapCode d on Notation = NonProdScrap
 join CompanyH.dbo.InvMaster e on a.StockCode = e.StockCode
-where a.EntryDate between '3/31/19' and '5/1/19' and a.GlCode = '59340-000') NONPROD
+where a.EntryDate between @Start and @End and a.GlCode = '59340-000') NONPROD
