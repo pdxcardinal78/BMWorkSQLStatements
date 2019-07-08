@@ -1,8 +1,8 @@
 Declare @start as date
 Declare @end as date
 
-Set @start = '5/1/19'
-Set @end = '5/31/19'
+Set @start = '6/2/19'
+Set @end = '6/29/19'
 
 
 Select Status, Count(NCR) as CurrentStatus
@@ -14,7 +14,7 @@ Order By Count(NCR) DESC
 
 Select Origin_cause, Count(NCR) as Count
 From uniPoint_CompanyH.dbo.PT_NC
-Where NCR_Date between @start and @end and Status NOT IN ('Origination')
+Where NCR_Date between @start and @end and Status NOT IN ('Origination') and NC_type not in ('Customer', 'Vendor')
 Group By Origin_cause
 Order By Count(NCR) DESC
 

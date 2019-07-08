@@ -1,7 +1,7 @@
 Declare @Start as Date
 Declare @End as Date
 
-Set @Start = '6/17/19'
+Set @Start = '6/1/17'
 Set @End = '6/17/19'
 
 Select 'WIP' as TransType, StockCode, StockDescription as Description, DateEntry as EntryDate, Job, WorkCentre as WorkCenter, Operator, '' as Reference, '' as AddReference, NonProdScrap as ScrapCode, ScrapDescription, QtyScrapped, TotalScrapCost as ScrapCost
