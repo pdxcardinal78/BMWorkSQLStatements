@@ -1,8 +1,8 @@
 Declare @Start as Date
 Declare @End as Date
 
-Set @Start = '6/1/17'
-Set @End = '6/17/19'
+Set @Start = '10/1/17'
+Set @End = getdate()
 
 Select 'WIP' as TransType, StockCode, StockDescription as Description, DateEntry as EntryDate, Job, WorkCentre as WorkCenter, Operator, '' as Reference, '' as AddReference, NonProdScrap as ScrapCode, ScrapDescription, QtyScrapped, TotalScrapCost as ScrapCost
 FROM(Select t1.Job, t4.StockCode, t4.StockDescription,t1.Operation, Operator, t3.WorkCentre, Machine, DateEntry, t1.QtyScrapped, t1.Journal, t1.NonProdScrap, t2.Description as ScrapDescription,
